@@ -1,0 +1,61 @@
+Setup
+Initialize React:
+sh
+Copy
+Edit
+npx create-react-app task-manager-frontend
+cd task-manager-frontend
+npm start
+Install Axios:
+sh
+Copy
+Edit
+npm install axios
+📌 Custom Hook for Task Management
+Create useTasks.js:
+js
+Copy
+Edit
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const useTasks = () => {
+    const [tasks, setTasks] = useState([]);
+
+    const fetchTasks = async () => {
+        const response = await axios.get('/api/tasks');
+        setTasks(response.data);
+    };
+
+    useEffect(() => {
+        fetchTasks();
+    }, []);
+
+    return { tasks, fetchTasks };
+};
+
+export default useTasks;
+📌 Task List UI
+Create a component TaskList.js:
+js
+Copy
+Edit
+import React from 'react';
+import useTasks from './useTasks';
+
+const TaskList = () => {
+    const { tasks } = useTasks();
+
+    return (
+        <div>
+            <h2>Tasks</h2>
+            <ul>
+                {tasks.map((task) => (
+                    <li key={task.id}>{task.title} - {task.status}</li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+
+export default TaskList;
