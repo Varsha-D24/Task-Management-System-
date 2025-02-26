@@ -1,0 +1,21 @@
+Implement a request logger and title validation middleware in middleware.js:
+js
+Copy
+Edit
+const fs = require('fs');
+const path = require('path');
+
+const logger = (req, res, next) => {
+    const log = `${new Date().toISOString()} - ${req.method} - ${req.url}\n`;
+    fs.appendFileSync(path.join(__dirname, 'requests.log'), log);
+    next();
+};
+
+const titleValidation = (req, res, next) => {
+    if (req.body.title && req.body.title.toLowerCase().includes('test')) {
+        return res.status(400).json({ error: 'Title cannot contain the word "test"' });
+    }
+    next();
+};
+
+module.exports = { logger, titleValidation };
