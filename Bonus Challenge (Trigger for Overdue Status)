@@ -1,0 +1,14 @@
+CREATE OR REPLACE FUNCTION update_overdue_status()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE tasks
+    SET status = 'Overdue'
+    WHERE due_date < NOW() AND status != 'Completed';
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER overdue_trigger
+AFTER UPDATE ON tasks
+FOR EACH ROW
+EXECUTE FUNCTION update_overdue_status();
