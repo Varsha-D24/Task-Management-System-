@@ -1,0 +1,5 @@
+📌 API & DB Design: Used NodeJS (ExpressJS) for APIs, Sequelize ORM for PostgreSQL, ensuring data integrity.
+
+📌 Challenges: Validation errors in Sequelize, date constraints, and efficient API response handling.
+
+📌 UI Approach: Used a custom hook (useTasks.js) instead of Redux for lightweight state management.
